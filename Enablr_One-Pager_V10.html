@@ -1,0 +1,399 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+:root{--ink:#0F1E33;--soft:#33465E;--mut:#6B7A8D;--coral:#E7663F;--coralt:#FBEDE7;--cream:#FBF8F2;--paper:#FFFFFF;--line:#E4DDD0;--teal:#1F8A80;--navymut:#9FB0C4;--navybody:#CBBBA6;}
+/* Marges de page reelles => pagination naturelle. Fond decale => bande au ras sur chaque page. */
+@page{
+  size:A4; margin:26mm 14mm 16mm;
+  background:url(pagebg.png) no-repeat;
+  background-size:210mm 297mm;
+  background-position:-14mm -26mm;
+  @top-left{ content:url(logo-header.png); vertical-align:bottom; }
+  @top-right{ content:"www.ai-enablr.com"; font-family:Poppins; font-size:7.5pt; color:#6B7A8D; vertical-align:bottom; }
+  @bottom-left{ content:"Enablr . A Singapore company"; font-family:Poppins; font-size:7.5pt; color:#6B7A8D; }
+  @bottom-right{ content:"www.ai-enablr.com  .  Page " counter(page); font-family:Poppins; font-size:7.5pt; color:#6B7A8D; }
+}
+/* page 1 : pas de logo courant, le lockup est dans le contenu */
+@page:first{ @top-left{ content:none; } @top-right{ content:none; } }
+*{box-sizing:border-box;}
+html,body{margin:0;}
+body{font-family:"Poppins",Helvetica,Arial,sans-serif;color:var(--soft);font-size:10pt;line-height:1.5;}
+/* --- garde-fous anti-debordement --- */
+.tile,.step,.orow,.card,.cta,.panel,.ccard,.founder,.wsitem,.keep{break-inside:avoid;}
+h1,h2,.sec{break-after:avoid;}
+table{break-inside:auto;} tr{break-inside:avoid;}
+img{max-width:100%;}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:10mm;}
+.head img{height:11mm;}
+.base{font-family:Lora;font-style:italic;font-size:12pt;color:var(--coral);margin-top:3px;}
+.meta{text-align:right;}
+.meta .t{font-size:7.5pt;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);font-weight:600;}
+.meta .u{font-size:10pt;font-weight:700;color:var(--ink);margin-top:3px;}
+.intro{margin:4mm 0 2.4mm;font-size:10.5pt;}
+.intro b{color:var(--ink);font-weight:700;}
+.quote{font-family:Lora,Georgia,serif;font-style:italic;font-size:10.5pt;color:var(--coral);margin:0 0 1mm;line-height:1.4;}
+.sec{display:flex;align-items:center;gap:8px;margin:11.4mm 0 2.2mm;}
+.sec.tight{margin-top:11.4mm;}
+.sec .num{color:var(--coral);font-weight:700;font-size:9pt;}
+.sec .lbl{color:var(--mut);font-weight:700;font-size:8pt;letter-spacing:2px;text-transform:uppercase;}
+.sec .note{color:var(--mut);font-weight:400;font-size:7.5pt;text-transform:none;letter-spacing:0;}
+.sec .rule{flex:1;height:1px;background:var(--line);}
+/* rangees : wrap autorise, pas de compression */
+.tiles{display:block;}
+.tile{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:7px 13px;margin-bottom:4px;min-height:12.8mm;}
+.tile svg{width:20px;height:20px;flex:0 0 auto;}
+.tile .tw{flex:0 0 56mm;}
+.tile .tt{font-weight:700;color:var(--ink);font-size:9.5pt;line-height:1.2;}
+.tile .td{color:var(--mut);font-size:7.6pt;margin-top:2px;line-height:1.3;}
+.tile .tx{flex:1;min-width:0;color:var(--soft);font-size:7.6pt;line-height:1.4;border-left:1px solid var(--line);padding-left:11px;}
+.tile .tx b{color:var(--ink);font-weight:700;}
+.steps{display:flex;gap:6px;margin-top:2mm;}
+.step{flex:1 1 0;min-width:0;}
+.circle{width:22px;height:22px;border:1.6px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:9pt;color:var(--ink);}
+.step.last .circle{background:var(--coral);border-color:var(--coral);color:#fff;}
+.step .sl{font-weight:700;color:var(--ink);font-size:9pt;margin-top:7px;line-height:1.15;}
+.step .sd{color:var(--mut);font-size:7.5pt;margin-top:3px;line-height:1.3;}
+.phase{display:flex;align-items:center;gap:8px;margin:1mm 0 0;}
+.phase .pn{font-size:7pt;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);font-weight:700;white-space:nowrap;}
+.phase .pt{font-size:9.5pt;font-weight:700;color:var(--ink);white-space:nowrap;}
+.phase .pd{font-size:7.2pt;color:var(--mut);white-space:nowrap;}
+.fork{display:flex;align-items:center;gap:8px;margin:3.4mm 0 2.2mm;}
+.fork .fl{font-size:7pt;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);font-weight:700;white-space:nowrap;}
+.fork .rule{flex:1;height:1px;background:var(--line);}
+.lanes{display:flex;gap:8px;}
+.lane{flex:1 1 0;min-width:0;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--coral);border-radius:8px;padding:10px 12px;}
+.lane.them{border-left-color:var(--ink);}
+.lane .lw{font-size:6.4pt;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;color:var(--coral);}
+.lane.them .lw{color:var(--ink);}
+.lane .lt{font-weight:700;color:var(--ink);font-size:9.5pt;margin-top:2px;}
+.lane .ld{color:var(--mut);font-size:7.6pt;margin-top:4px;line-height:1.35;}
+.hand{display:flex;align-items:center;gap:8px;margin-top:3mm;}
+.hand .hc{width:22px;height:22px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10pt;flex:0 0 auto;}
+.hand .ht{font-weight:700;color:var(--ink);font-size:9.5pt;white-space:nowrap;}
+.hand .hd{color:var(--mut);font-size:7.6pt;}
+
+/* methode : tronc commun a gauche, deux champs a droite */
+.msplit{display:flex;gap:9px;}
+.trunk{min-width:0;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--coral);border-radius:0 9px 9px 0;padding:10px 13px;}
+.trunk .kk{font-size:6.6pt;letter-spacing:1.3px;text-transform:uppercase;color:var(--coral);font-weight:700;}
+.trunk .th{font-weight:700;color:var(--ink);font-size:12.2pt;margin-top:1px;line-height:1.2;}
+.trunk .td2{font-size:7.4pt;color:var(--mut);margin-top:1px;}
+.mst{display:flex;gap:8px;margin-top:8px;}
+.mnum{width:17px;height:17px;border-radius:50%;border:1.3px solid var(--ink);color:var(--ink);font-weight:700;font-size:7pt;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.mst .ml{font-weight:700;color:var(--ink);font-size:8.4pt;line-height:1.2;}
+.mst .md{font-size:7.3pt;color:var(--mut);line-height:1.32;margin-top:1px;}
+.tracks{flex:1.1;min-width:0;}
+.tstep{font-size:6.6pt;letter-spacing:1.3px;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:4px;}
+.lane2{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--coral);border-radius:0 9px 9px 0;padding:9px 12px;margin-bottom:6px;}
+.lane2.them{border-left-color:var(--ink);}
+.lane2 .lw{font-size:6.4pt;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;color:var(--coral);}
+.lane2.them .lw{color:var(--ink);}
+.lane2 .lt{font-weight:700;color:var(--ink);font-size:9pt;margin-top:1px;line-height:1.2;}
+.li{display:flex;gap:6px;font-size:7.4pt;line-height:1.35;margin-top:3.5px;color:var(--mut);}
+.li .sq{width:4px;height:4px;background:var(--coral);flex:0 0 auto;margin-top:4px;}
+.lane2.them .li .sq{background:var(--ink);}
+.li b{color:var(--ink);font-weight:700;}
+/* badges partie 04 */
+.bstrip{display:block;}
+.bcell2{display:flex;gap:10px;align-items:center;margin-bottom:10mm;}
+.bcell2 svg{width:10.6mm;height:12mm;flex:0 0 auto;}
+.bt2{font-weight:700;color:var(--ink);font-size:9pt;line-height:1.2;}
+.bd2{color:var(--mut);font-size:7.4pt;margin-top:2px;line-height:1.35;}
+.bgrid{display:flex;gap:9px;}
+.bcell{flex:1 1 0;min-width:0;text-align:center;}
+.bcell svg{width:11.4mm;height:12.9mm;}
+.bcell .bt{font-weight:700;color:var(--ink);font-size:8.6pt;line-height:1.2;margin-top:4px;}
+.bcell .bd{color:var(--mut);font-size:7.3pt;margin-top:3px;line-height:1.35;}
+
+/* methode : bloc navy a pointe + deux voies */
+.m3{display:flex;align-items:flex-start;}
+.mleft{display:flex;flex:1.02;min-width:0;}
+.mnavy{flex:1;min-width:0;background:var(--ink);border-radius:9px 0 0 9px;padding:13px 6px 16px 14px;}
+.mnavy .nk{font-size:6.6pt;letter-spacing:1.3px;text-transform:uppercase;font-weight:700;color:var(--coral);}
+.mnavy .nh{font-weight:700;color:var(--cream);font-size:12.2pt;line-height:1.2;margin-top:2px;}
+.mnavy .nsub{font-size:7.6pt;color:var(--navymut);margin-top:2px;}
+.nrow{display:flex;gap:9px;margin-top:16px;}
+.nrow .nnum{font-weight:700;color:var(--coral);font-size:9.5pt;flex:0 0 auto;}
+.nrow .nl{font-weight:700;color:var(--cream);font-size:8.8pt;line-height:1.2;}
+.nrow .nd{font-size:7.5pt;color:var(--navymut);line-height:1.38;margin-top:1px;}
+.nout{font-size:7.6pt;color:var(--cream);line-height:1.4;margin-top:10px;padding-top:8px;border-top:1px solid rgba(159,176,196,.35);}
+.nout b{color:var(--coral);font-weight:700;}
+.mtip{flex:0 0 9mm;}
+.mtracks{flex:1.06;min-width:0;padding-left:19px;padding-top:0;}
+.mlabels{display:flex;margin-bottom:5px;}
+.tstep{font-size:6.6pt;letter-spacing:1.3px;text-transform:uppercase;color:var(--mut);font-weight:700;}
+.tcard{background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--coral);border-radius:0 9px 9px 0;padding:11px 13px;margin-bottom:21px;}
+.tcard.b{border-left-color:var(--ink);}
+.tcard .tk{font-size:6.4pt;letter-spacing:1.4px;font-weight:700;color:var(--coral);}
+.tcard.b .tk{color:var(--ink);}
+.tcard .tp{font-weight:700;color:var(--ink);font-size:12.2pt;line-height:1.18;margin-top:2px;}
+.tli{display:flex;gap:6px;white-space:nowrap;overflow:hidden;font-size:7.4pt;line-height:1.35;margin-top:4px;color:var(--mut);}
+.tli .sq{width:4px;height:4px;background:var(--coral);flex:0 0 auto;margin-top:4px;}
+.tcard.b .tli .sq{background:var(--ink);}
+.tli b{color:var(--ink);font-weight:700;}
+.tcard .tw2{font-size:6.4pt;letter-spacing:.3px;color:var(--mut);margin-top:6px;font-weight:500;}
+.own{display:flex;align-items:center;gap:11px;background:var(--coralt);border-left:3px solid var(--coral);border-radius:0 8px 8px 0;padding:9px 14px;margin-top:4mm;}
+.own .oc{width:20px;height:20px;border-radius:50%;background:var(--coral);color:#fff;font-size:10pt;line-height:20px;text-align:center;flex:0 0 auto;font-weight:700;}
+.own .ob{font-weight:700;color:var(--ink);font-size:10pt;line-height:1.2;}
+.own .os{display:block;font-size:7.6pt;color:var(--soft);line-height:1.35;margin-top:2px;}
+/* matrice offres */
+.orow{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:4px 12px;margin-bottom:4px;}
+.orow.flag{background:var(--coralt);border-color:var(--coral);}
+.orow.hdr{background:none;border:none;padding:0 12px;margin-bottom:1px;}
+.orow.hdr .ocol{color:var(--mut);font-weight:700;font-size:6.6pt;letter-spacing:1px;text-transform:uppercase;line-height:1.2;}
+.orow.hdr .ocol span{display:block;font-weight:400;letter-spacing:0;text-transform:none;font-size:5.8pt;margin-top:2px;}
+.oname{flex:2.15;min-width:40mm;}
+.oname .n{font-weight:700;color:var(--ink);font-size:9.6pt;line-height:1.2;}
+.oname .s{color:var(--mut);font-size:6.8pt;letter-spacing:1px;text-transform:uppercase;margin-top:1px;}
+.oname .p{font-size:8pt;font-weight:500;color:var(--soft);margin-top:2px;}
+.oname .p b{color:var(--coral);font-weight:700;}
+.oname .p2{display:block;font-size:7.6pt;color:var(--mut);margin-top:1px;}
+.oname .p b:only-child{}
+.oname .w{font-size:6.6pt;font-style:italic;color:var(--mut);margin-top:2px;line-height:1.3;}
+.ocol{flex:1;text-align:center;font-size:8.5pt;}
+.no{color:var(--line);font-weight:700;font-size:11pt;line-height:1;}
+.ndan{font-size:7.2pt;color:var(--mut);font-style:italic;margin-top:1mm;}
+.note2{font-size:7pt;color:var(--mut);font-style:italic;margin-top:.6mm;padding-left:12px;}
+.chk{display:inline-block;width:16px;height:16px;background:var(--teal);border-radius:50%;position:relative;}
+.chk svg{width:16px;height:16px;display:block;}
+
+/* partie technique : couches */
+.tstep3{font-size:6.6pt;letter-spacing:1.3px;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:4px;}
+.claim{font-size:8.4pt;color:var(--soft);margin:0 0 1.6mm;}
+.claim b{color:var(--ink);font-weight:700;}
+.s3{display:flex;justify-content:space-between;align-items:center;}
+.layers{flex:0 0 57%;min-width:0;}
+.bstack{flex:0 0 33%;min-width:0;margin-right:4mm;}
+.band{display:flex;align-items:center;gap:11px;border-radius:8px;padding:8px 12px;}
+.band .bl{flex:0 0 24mm;font-size:6.4pt;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;}
+.band .bd{flex:1;min-width:0;font-size:7.5pt;line-height:1.38;}
+.band.eco{background:var(--paper);border:1px solid var(--line);}
+.band.eco .bl{color:var(--mut);} .band.eco .bd{color:var(--soft);} .band.eco .bd b{color:var(--ink);font-weight:700;}
+.band.conn{background:var(--coralt);border:1px solid var(--coral);}
+.band.conn .bl{color:var(--coral-deep,#C24E2C);} .band.conn .bd{color:var(--soft);} .band.conn .bd b{color:var(--ink);font-weight:700;}
+.band.ai{background:var(--ink);}
+.band.ai .bl{color:var(--coral);} .band.ai .bd{color:var(--navymut);} .band.ai .bd b{color:var(--cream);font-weight:700;}
+.band.found{background:var(--paper);border:1px solid var(--line);}
+.band.found .bl{color:var(--mut);} .band.found .bd{color:var(--soft);} .band.found .bd b{color:var(--ink);font-weight:700;}
+.link{display:flex;height:3mm;}
+.link .sp{flex:0 0 24mm;}
+.link .ln{flex:1;display:flex;justify-content:center;}
+.link .ln span{width:2px;background:var(--coral);}
+.link.dark .ln span{background:var(--ink);}
+/* who we are */
+.founders{display:flex;gap:8px;}
+.founder{flex:1 1 0;min-width:0;display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 11px;}
+.ava{width:12mm;height:12mm;border-radius:50%;background:#E4E9EE;border:1.5px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10pt;color:var(--ink);}
+.founder .fn{font-weight:700;color:var(--ink);font-size:10pt;line-height:1.15;}
+.founder .fr{font-size:6.6pt;letter-spacing:.8px;text-transform:uppercase;color:var(--coral);font-weight:700;margin-top:2px;}
+.founder .fb{font-size:7.3pt;color:var(--soft);margin-top:3px;line-height:1.3;}
+.founder .fp{font-size:5.8pt;color:var(--mut);font-style:italic;margin-top:2px;}
+.todo{font-weight:400;font-size:7pt;color:var(--coral);}
+.together{font-size:8pt;color:var(--soft);margin-top:3mm;font-style:italic;}
+.together b{color:var(--ink);font-weight:700;font-style:normal;}
+/* who it is for */
+.wchips{display:flex;gap:8px;}
+.wchip{flex:1 1 0;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:9px 10px;}
+.wchip .t{font-weight:700;color:var(--ink);font-size:8.6pt;line-height:1.2;}
+.wchip .d{color:var(--mut);font-size:7.3pt;margin-top:2px;line-height:1.3;}
+/* case studies */
+.crow2{display:flex;gap:8px;margin-bottom:9px;}
+.ccard{flex:1 1 0;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 10px;}
+.ccard.cta2{background:var(--ink);border-color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;text-align:center;}
+.chd{display:flex;justify-content:space-between;align-items:center;padding-bottom:4px;border-bottom:1px solid var(--line);}
+.cname{font-weight:700;color:var(--ink);font-size:10.5pt;line-height:1.15;}
+.csub{font-size:7pt;color:var(--mut);margin-top:1px;line-height:1.2;}
+.ctag{font-size:5.6pt;letter-spacing:.5px;font-weight:700;text-transform:uppercase;color:var(--soft);background:var(--sand,#EFE7D8);padding:2px 6px;border-radius:20px;white-space:nowrap;}
+.ctag.soon{background:var(--coralt);color:var(--coral);}
+.crow{margin-top:4px;}
+.crow .k{font-size:6.4pt;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;color:var(--coral);}
+.crow .v{font-size:7.5pt;color:var(--soft);line-height:1.28;margin-top:1px;}
+.crow .v.ph{color:var(--mut);font-style:italic;}
+.ccard.cta2 .ct{font-weight:700;font-size:12pt;color:var(--cream);}
+.ccard.cta2 .ct .c{color:var(--coral);}
+.ccard.cta2 .cb{display:inline-block;border:1px solid rgba(255,255,255,.4);border-radius:30px;padding:6px 14px;color:var(--cream);font-weight:700;font-size:8pt;text-decoration:none;}
+/* what sets us apart */
+.wsgrid{display:flex;gap:8px;}
+.brk{break-before:page;}
+.wsitem{flex:1 1 0;min-width:0;border-top:2px solid var(--coral);padding-top:6px;}
+.wsitem .wt{font-weight:700;color:var(--ink);font-size:8.6pt;line-height:1.2;}
+.wsitem .wd{color:var(--mut);font-size:7.4pt;margin-top:3px;line-height:1.35;}
+/* CTA */
+.cta{position:absolute;bottom:0;left:0;right:0;background:var(--ink);border-radius:10px;padding:12px 18px;margin-top:0;display:flex;justify-content:space-between;align-items:center;gap:8mm;}
+.cta .k{font-size:7.5pt;letter-spacing:1.6px;text-transform:uppercase;color:var(--navymut);font-weight:600;}
+.cta .h{font-weight:700;font-size:14pt;color:var(--cream);margin-top:4px;}
+.cta .h .c{color:var(--coral);}
+.badge{display:flex;align-items:center;gap:7px;color:var(--cream);font-weight:700;font-size:9pt;white-space:nowrap;}
+</style></head><body>
+
+<div class="head">
+  <div><img src="enablr-logo.png"><div class="base">Build your own solutions with AI.</div></div>
+  <div class="meta"><div class="t">AI enablement for SMEs across APAC</div><div class="u">www.ai-enablr.com</div></div>
+</div>
+
+<p class="intro">AI is powerful, yet most SMEs <b>only scratch the surface.</b> Teams remain stuck in chat windows, or at best run isolated projects without shared standards, data architecture, or security. Engineering time goes where the revenue is, rightly so, so the tools your own teams need are never built. <b>With AI coding you no longer have to choose.</b> The right people are already inside your organisation, and we help them <b>build their own tools</b>, because they know exactly what they need.</p>
+<p class="quote">&ldquo;Give a man a fish and you feed him for a day. Teach him how to fish and you feed him for a lifetime.&rdquo;</p>
+
+<div class="sec"><span class="num">01</span><span class="lbl">What it does for your business</span><span class="rule"></span></div>
+<div class="tiles">
+  <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E7663F" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M4 19c0-3 2.5-5 5-5s5 2 5 5"/><path d="M17 9h4"/></svg><div class="tw"><div class="tt">Scale without hiring</div><div class="td">More volume, hours back, same team.</div></div><div class="tx">Quote generation <b>.</b> Document processing <b>.</b> Request triage <b>.</b> Recurring reports <b>.</b> Payment reminders <b>.</b> CRM notes and follow-ups</div></div>
+  <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E7663F" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 20h8"/></svg><div class="tw"><div class="tt">Replace software</div><div class="td">Cheaper, built around your process.</div></div><div class="tx">Expense claims <b>.</b> Invoicing and procurement approvals <b>.</b> Financial consolidation <b>.</b> ATS and CV screening <b>.</b> Onboarding and offboarding</div></div>
+  <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E7663F" stroke-width="2" stroke-linecap="round"><path d="M4 15l5-5 3 3 6-7"/><path d="M15 6h4v4"/></svg><div class="tw"><div class="tt">Win more deals</div><div class="td">Turn traffic into qualified leads.</div></div><div class="tx">Prospect self-diagnosis tool <b>.</b> Lead research and enrichment <b>.</b> Personalised outreach <b>.</b> Proposal and SOW drafts <b>.</b> Follow-up sequences</div></div>
+  <div class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="#E7663F" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-3-5.3 3 1.1-6L3.4 9.4l6-.8z"/></svg><div class="tw"><div class="tt">New products</div><div class="td">Sell what you could not sell before.</div></div><div class="tx">Client-facing AI agents in your product <b>.</b> Self-serve diagnostic tools <b>.</b> New features shipped in weeks <b>.</b> New service lines</div></div>
+</div>
+
+
+<div class="sec"><span class="num">02</span><span class="lbl">The method . one start, two ways to build</span><span class="rule"></span></div>
+<div class="keep">
+<div class="mlabels"><div class="tstep" style="flex:1">Step 1 . mapping, always</div><div style="flex:0 0 9mm"></div><div class="tstep" style="flex:1.06;padding-left:19px">Step 2 . you choose how it gets built</div></div>
+<div class="m3">
+  <div class="mleft">
+  <div class="mnavy">
+    <div class="nh">We understand your business</div>
+    <div class="nsub">2 to 3 weeks, on every engagement.</div>
+    <div class="nrow"><span class="nnum">01</span><div><div class="nl">We map the process</div><div class="nd">Where the time goes, department by department.</div></div></div>
+    <div class="nrow"><span class="nnum">02</span><div><div class="nl">We shortlist the projects</div><div class="nd">Scored on payback and effort, so you choose.</div></div></div>
+    <div class="nrow"><span class="nnum">03</span><div><div class="nl">We set up the environment</div><div class="nd">Models and coding tools, context files and skills, data access and security. We build your MCP and connect your IT landscape by API.</div></div></div>
+  </div>
+  <div class="mtip"><svg viewBox="0 0 30 300" preserveAspectRatio="none" width="30" height="62mm" xmlns="http://www.w3.org/2000/svg"><path d="M0 0 L0 300 L30 150 Z" fill="#0F1E33"/></svg></div>
+  </div>
+  <div class="mtracks">
+    <div class="tcard">
+      <div class="tk">Track A</div>
+      <div class="tp">We train your champions to build</div>
+      <div class="tli"><span class="sq"></span><span><b>We name the champions.</b> Who inside can carry AI.</span></div>
+      <div class="tli"><span class="sq"></span><span><b>We train and we coach.</b> They build, we review.</span></div>
+      <div class="tli"><span class="sq"></span><span><b>The capability stays in-house.</b> Training included.</span></div>
+    </div>
+    
+    <div class="tcard b">
+      <div class="tk">Track B</div>
+      <div class="tp">We build the workflows for you</div>
+      <div class="tli"><span class="sq"></span><span><b>No training, no champion needed.</b> No bandwidth required.</span></div>
+      <div class="tli"><span class="sq"></span><span><b>We build it all.</b> Cross-department work included.</span></div>
+      <div class="tli"><span class="sq"></span><span><b>Remote or on-site.</b> Documented and handed over.</span></div>
+    </div>
+  </div>
+</div>
+<div class="own"><span class="oc">&rarr;</span><div><span class="ob">You own what we build.</span><span class="os">1 to 3 workflows live and documented, run by your team, with governance. Start on Track B, move to Track A later.</span></div></div>
+</div>
+
+<div class="keep">
+<div class="sec"><span class="num">02</span><span class="lbl">The method, continued</span><span class="note">. step 3, what we set up</span><span class="rule"></span></div>
+<p class="claim">Not a chatbot. <b>An AI infrastructure your teams use every day</b>, built on your tools, your data and your rules.</p>
+<div class="s3">
+<div class="layers">
+<div class="band eco"><div class="bl">Your ecosystem</div><div class="bd"><b>Email, WhatsApp, CRM, ERP, accounting, Zapier, your internal systems.</b> Whatever you already run on.</div></div>
+<div class="link"><div class="sp"></div><div class="ln"><span></span></div></div>
+<div class="band conn"><div class="bl">Connection layer</div><div class="bd"><b>MCP and APIs.</b> We plug the AI into your tools instead of asking your team to copy and paste between them.</div></div>
+<div class="link"><div class="sp"></div><div class="ln"><span></span></div></div>
+<div class="band ai"><div class="bl">AI layer</div><div class="bd"><b>Models, coding tools, context files and skills.</b> Your business written down once, reused by every agent, plus our reusable skill library.</div></div>
+<div class="link dark"><div class="sp"></div><div class="ln"><span></span></div></div>
+<div class="band found"><div class="bl">Foundation</div><div class="bd"><b>Database, access control, security, hosting, deployment, unified billing.</b> One bill instead of ten subscriptions nobody tracks.</div></div>
+</div>
+<div class="bstack"><div class="bstrip">
+  <div class="bcell2"><svg viewBox="0 0 46 52" xmlns="http://www.w3.org/2000/svg"><path d="M23 1 L44 12.5 L44 35.5 L23 47 L2 35.5 L2 12.5 Z" fill="#0F1E33"/><path d="M23 5.5 L40 14.8 L40 33.2 L23 42.5 L6 33.2 L6 14.8 Z" fill="none" stroke="#FBF8F2" stroke-width="1" stroke-opacity=".45"/><g transform="translate(23,24)" fill="none" stroke="#FBF8F2" stroke-width="1.7" stroke-linecap="round"><ellipse cx="0" cy="-6.4" rx="8" ry="3.1"/><path d="M-8 -6.4 v6.4 c0 1.7 3.6 3.1 8 3.1 s8 -1.4 8 -3.1 v-6.4"/><path d="M-8 0 v6.4 c0 1.7 3.6 3.1 8 3.1 s8 -1.4 8 -3.1 V0"/></g></svg><div><div class="bt2">Reusable agent library</div><div class="bd2">We never rebuild from scratch. Our library makes the build fast, with before and after KPIs.</div></div></div>
+  <div class="bcell2"><svg viewBox="0 0 46 52" xmlns="http://www.w3.org/2000/svg"><path d="M23 1 L44 12.5 L44 35.5 L23 47 L2 35.5 L2 12.5 Z" fill="#E7663F"/><path d="M23 5.5 L40 14.8 L40 33.2 L23 42.5 L6 33.2 L6 14.8 Z" fill="none" stroke="#FBF8F2" stroke-width="1" stroke-opacity=".45"/><g transform="translate(23,24)"><path d="M-1 -10 L1.6 -2.6 L9 0 L1.6 2.6 L-1 10 L-3.6 2.6 L-11 0 L-3.6 -2.6 Z" fill="#FFFFFF"/><path d="M7.5 -9.5 L8.6 -6.6 L11.5 -5.5 L8.6 -4.4 L7.5 -1.5 L6.4 -4.4 L3.5 -5.5 L6.4 -6.6 Z" fill="#FFFFFF"/></g></svg><div><div class="bt2">Always on the latest AI</div><div class="bd2">We track new models and tools, and bring you the best fit rather than the one we know.</div></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="keep">
+<div class="sec"><span class="num">03</span><span class="lbl">How we work with you</span><span class="note">. indicative pricing (SGD), to finalise</span><span class="rule"></span></div>
+<div class="orow hdr">
+  <div class="oname"></div>
+  <div class="ocol">Mapping<span>processes, projects, people</span></div>
+  <div class="ocol">Training<span>your people, hands-on</span></div>
+  <div class="ocol">Workflows built<span>1 to 3, live</span></div>
+  <div class="ocol">Handover<span>docs, governance, you own it</span></div>
+</div>
+<div class="orow flag">
+  <div class="oname"><div class="n">AI Mapping</div><div class="s">The starting point . 2 to 3 weeks</div><div class="p"><b>S$4,000 to S$6,000</b> one-off</div><div class="w">Ranked projects, target architecture, and who inside can build. Yours to keep.</div></div>
+  <div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div><div class="ocol"></div><div class="ocol"></div><div class="ocol"></div>
+</div>
+<div class="orow">
+  <div class="oname"><div class="n">Training</div><div class="s">Standalone</div><div class="p">from <b>S$500</b> / seat</div><div class="w">Best when your team just needs to go faster, with no project yet.</div></div>
+  <div class="ocol"></div><div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div><div class="ocol"></div><div class="ocol"></div>
+</div>
+<div class="orow">
+  <div class="oname"><div class="n">Track A . With your champions</div><div class="s">Monthly . training included</div><div class="p"><b>S$5,450</b> / month remote<span class="p2">S$8,450 / month on-site</span></div><div class="w">Best when you want the capability to stay in-house. Includes [ X ] hours of training per month and up to 3 champions coached.</div></div>
+  <div class="ocol"></div><div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div><div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div><div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div>
+</div>
+<div class="orow">
+  <div class="oname"><div class="n">Track B . We build it for you</div><div class="s">Monthly . remote or on-site</div><div class="p"><b>S$4,950</b> / month remote<span class="p2">S$7,950 / month on-site</span></div><div class="w">Best when nobody has the bandwidth. No training, no champion required.</div></div>
+  <div class="ocol"></div><div class="ocol"><span class="no">&ndash;</span></div><div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div><div class="ocol"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></div>
+</div>
+<div class="note2">Typical engagement: Mapping, then 3 months on Track A or B. Month by month, no lock-in.</div>
+
+</div>
+
+<div class="sec"><span class="num">04</span><span class="lbl">Who it is for</span><span class="rule"></span></div>
+<div class="wchips">
+  <div class="wchip"><div class="t">SME founders, GMs &amp; COOs</div><div class="d">Roughly 10 to 200 staff.</div></div>
+  <div class="wchip"><div class="t">Family businesses</div><div class="d">Modernising their operations.</div></div>
+  <div class="wchip"><div class="t">VC &amp; PE-backed companies</div><div class="d">Growth targets, tight headcount.</div></div>
+  <div class="wchip"><div class="t">APAC subsidiaries</div><div class="d">Leaner local operations.</div></div>
+</div>
+
+
+
+<div class="sec tight"><span class="num">05</span><span class="lbl">Case studies</span><span class="rule"></span></div>
+<div class="crow2">
+<div class="ccard">
+    <div class="chd"><div><div class="cname">B2B fintech</div><div class="csub">Business accounts &amp; spend management</div></div><div class="ctag">Client</div></div>
+    <div class="crow"><div class="k">Challenge</div><div class="v">Slow, manual business onboarding requiring large compliance teams to review documents, causing delays in account activation.</div></div>
+    <div class="crow"><div class="k">What we built</div><div class="v">An automated n8n AI workflow that handles document analysis, compliance checks and instant self-serve approvals.</div></div>
+    <div class="crow"><div class="k">Result</div><div class="v">Manual reviews down to minutes. 20% automatic approval and a 10% reduction in onboarding costs.</div></div>
+  </div>
+<div class="ccard">
+    <div class="chd"><div><div class="cname">Hotel-tech SaaS</div><div class="csub">Revenue &amp; distribution tools for hotels</div></div><div class="ctag">Client</div></div>
+    <div class="crow"><div class="k">Challenge</div><div class="v">Website conversion below 1% despite 10,000 monthly visits, failing to turn hotel visitors into qualified sales leads.</div></div>
+    <div class="crow"><div class="k">What we built</div><div class="v">An interactive self-diagnosis tool letting hotels benchmark pricing, content distribution and online setup against competitors.</div></div>
+    <div class="crow"><div class="k">Result</div><div class="v">Tripled the website conversion rate, turning generic traffic into high-intent inbound pitches.</div></div>
+  </div>
+</div>
+<div class="crow2">
+<div class="ccard">
+    <div class="chd"><div><div class="cname">HORECA distribution</div><div class="csub">Premium tableware &amp; water systems, Singapore</div></div><div class="ctag">Client</div></div>
+    <div class="crow"><div class="k">Challenge</div><div class="v">Chasing unpaid invoices across multi-outlet hotel and F&amp;B groups ran about two days a week, and every quotation was rebuilt by hand from supplier catalogues.</div></div>
+    <div class="crow"><div class="k">What we built</div><div class="v">Four workstreams, each owned by an internal champion. The two priority ones: a weekly payment-chasing pass (Xero export, N1 to N5 buckets, drafts per channel, log) and a quotation assistant applying their in-house pricing formula.</div></div>
+    <div class="crow"><div class="k">Result</div><div class="v">Chasing pass designed for under an hour instead of two days. Drafts only, and the client now runs both workflows itself.</div></div>
+  </div>
+<div class="ccard">
+    <div class="chd"><div><div class="cname">Data centre infrastructure</div><div class="csub">Load bank testing for critical power, APAC</div></div><div class="ctag soon">Starting</div></div>
+    <div class="crow"><div class="k">Challenge</div><div class="v">Quoting a data-centre load-bank project meant assembling five pricing blocks from scattered files, then rebuilding a 25-slide proposal by hand.</div></div>
+    <div class="crow"><div class="k">What we built</div><div class="v">An AI quoting agent co-built on live bids: a dozen input fields, a calibration engine that proposes the configuration, and the priced proposal generated.</div></div>
+    <div class="crow"><div class="k">Result</div><div class="v">Faster, more consistent quotes without tying up an expert on routine bids. The expert validates before generation.</div></div>
+  </div>
+</div>
+<div class="ndan">Client names shared on request, under NDA.</div>
+
+<div class="sec"><span class="num">06</span><span class="lbl">Who we are</span><span class="rule"></span></div>
+<div class="founders">
+  <div class="founder">
+    <div class="ava">FD</div>
+    <div>
+      <div class="fn">Fabien Deriaux</div>
+      <div class="fr">Co-founder . Product, sales &amp; pre-sales</div>
+      <div class="fb">20+ years from engineer to GM and product leadership, across international, multi-industry businesses. Owns the sales and pre-sales side.</div>
+      <div class="fp">[ photo to add ]</div>
+    </div>
+  </div>
+  <div class="founder">
+    <div class="ava">FL</div>
+    <div>
+      <div class="fn">Fran&ccedil;ois-Alexandre L&eacute;onard</div>
+      <div class="fr">Co-founder . Operations &amp; AI architecture</div>
+      <div class="fb">Ex-COO of a digital company (10 years). Owns operations, automation and AI architecture. Built the AI setups behind three of the case studies above.</div>
+      <div class="fp">[ photo to add ]</div>
+    </div>
+  </div>
+</div>
+<div class="together" style="margin-top:1.8mm"><b>Operations on one side, sales and pre-sales on the other.</b> Together, end-to-end expertise on the functions your business actually runs on.</div>
+
+
+
+<div class="cta">
+  <div><div class="k">Empower your team to build their own solutions with AI</div><div class="h">Let's find your first workflow that <span class="c">pays off.</span></div></div>
+  <div class="badge"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Proven AI methodology</div>
+</div>
+</body></html>
